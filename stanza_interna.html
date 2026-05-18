@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8">
+    <title>Galleria Virtuale - Emiciclo</title>
+    
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+
+    <script>
+      AFRAME.registerComponent('muri-invisibili', {
+        tick: function () {
+          var corpo = this.el; 
+          var pos = corpo.getAttribute('position');
+
+          var limiteDestra = 13;
+          var limiteSinistra = -15;
+          var limiteDietro = 4.5;
+          var limiteAvanti = -3.8;
+
+          if (pos.x > limiteDestra) pos.x = limiteDestra;
+          if (pos.x < limiteSinistra) pos.x = limiteSinistra;
+          if (pos.z > limiteDietro) pos.z = limiteDietro;
+          if (pos.z < limiteAvanti) pos.z = limiteAvanti;
+
+          corpo.setAttribute('position', pos);
+        }
+      });
+    </script>
+  </head>
+
+  <body>
+    <a-scene>
+
+      <a-assets>
+        <a-asset-item id="emiciclo-modello" src="modelli/salaEmiciclo3.glb"></a-asset-item>
+      </a-assets>
+
+      <a-entity id="camera-rig" 
+                position="0 0 3" 
+                rotation="0 90 0" 
+                wasd-controls="acceleration: 20;"
+                muri-invisibili>
+        
+        <a-entity id="user-camera" 
+                  camera 
+                  look-controls 
+                  position="3.3 1 -3">
+          <a-cursor color="#2196F3"></a-cursor>
+        </a-entity>
+
+      </a-entity>
+
+      <a-entity gltf-model="#emiciclo-modello" 
+                position="0 -1.5 0" 
+                scale="2.5 3 2.5">
+      </a-entity>
+
+      <a-entity light="type: ambient; color: #ffffff; intensity: 1.2;"></a-entity>
+
+      <a-entity light="type: point; color: #ffebc2; intensity: 0.8; distance: 15;" 
+                position="0 2 0">
+      </a-entity>
+
+    </a-scene>
+  </body>
+</html>
